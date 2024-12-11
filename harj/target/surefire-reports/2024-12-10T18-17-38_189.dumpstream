@@ -1,0 +1,5 @@
+# Created at 2024-12-10T18:17:38.332
+Boot Manifest-JAR contains absolute paths in classpath 'D:\SEAMK\Palvelinohjelmointi\palvelinharjoitus\harj\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+

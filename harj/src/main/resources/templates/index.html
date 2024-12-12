@@ -1,30 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"> <!-- Add the Thymeleaf namespace here -->
 <head>
-    <!-- link joka lisää bootstrapin -->
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event CRUD</title>
 </head>
-<body style="background-color:gray;">
+<body style="background-color: #909090;">
 
 <!-- Create Event Form -->
 <form action="/events/create" method="post">
     <label for="eventTitle">Event Title:</label>
     <input type="text" id="eventTitle" name="eventTitle" required>
+    <br><br>
 
-    <!-- Add other fields as needed -->
+    <label for="eventDescription">Event Description:</label>
+    <textarea id="eventDescription" name="eventDescription" required></textarea>
+    <br><br>
+
+    <label for="eventDate">Event Date:</label>
+    <input type="date" id="eventDate" name="eventDate" required>
+    <br><br>
+
+    <label for="eventTime">Event Time:</label>
+    <input type="time" id="eventTime" name="eventTime" required>
+    <br><br>
 
     <button type="submit">Create Event</button>
 </form>
 
+
+
 <!-- Read All Events -->
 <h2>All Events</h2>
-<table border="1">
+<table class="table table-bordered">
     <thead>
     <tr>
         <th>Event Title</th>
@@ -35,19 +46,18 @@
     </tr>
     </thead>
     <tbody>
-    <!-- Display all events here -->
-    <!-- Replace [EVENT_TITLE], [EVENT_DESCRIPTION], [EVENT_DATE], and [EVENT_TIME] with actual values -->
-    <tr>
-        <td>[EVENT_TITLE]</td>
-        <td>[EVENT_DESCRIPTION]</td>
-        <td>[EVENT_DATE]</td>
-        <td>[EVENT_CATEGORY]</td>
+    <tr th:each="event : ${events}">
+        <td th:text="${event.eventTitle}"></td>
+        <td th:text="${event.eventDescription}"></td>
+        <td th:text="${event.eventDate}"></td>
+        <td th:text="${event.categories[0].categoryName}"></td>
         <td>
-            <button type="button">Edit</button>
-            <button type="button">Delete</button>
+            <!-- Delete form -->
+            <form th:action="@{/events/delete/{id}(id=${event.eventId})}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
         </td>
     </tr>
-    <!-- Add more rows for additional events -->
     </tbody>
 </table>
 

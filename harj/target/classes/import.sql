@@ -1,2 +1,4 @@
--- insert a user into the users table
-INSERT INTO users (username, password) VALUES ('saku', 'password');
+INSERT INTO users (username, password) VALUES ('user', 'password');
+INSERT INTO categories (user_id, category_name) VALUES ((SELECT user_id FROM users WHERE username = 'user'), 'Meeting'), ((SELECT user_id FROM users WHERE username = 'user'), 'Workshop');
+INSERT INTO events (user_id, event_title, event_description, event_date, event_time, due_date) VALUES ((SELECT user_id FROM users WHERE username = 'user'), 'Team Meeting', 'Discuss project updates', '2024-12-15', '10:00:00', '2024-12-14'), ((SELECT user_id FROM users WHERE username = 'user'), 'Workshop on Java', 'A hands-on workshop on Spring Boot', '2024-12-20', '09:00:00', '2024-12-19');
+INSERT INTO event_categories (event_id, category_id) VALUES ((SELECT event_id FROM events WHERE event_title = 'Team Meeting' AND user_id = (SELECT user_id FROM users WHERE username = 'user')), (SELECT category_id FROM categories WHERE category_name = 'Meeting' AND user_id = (SELECT user_id FROM users WHERE username = 'user'))), ((SELECT event_id FROM events WHERE event_title = 'Workshop on Java' AND user_id = (SELECT user_id FROM users WHERE username = 'user')), (SELECT category_id FROM categories WHERE category_name = 'Workshop' AND user_id = (SELECT user_id FROM users WHERE username = 'user')));

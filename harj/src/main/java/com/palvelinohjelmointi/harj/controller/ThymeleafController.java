@@ -21,14 +21,18 @@ public class ThymeleafController {
 
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) {
-        // Save the user with the plain-text password (no hashing)
-        Users user = new Users();
-        user.setUsername(username);
-        user.setPassword(password); // Save the plain-text password directly
-        userRepository.save(user);
+        // Retrieve the user from the database based on username
+        Users user = userRepository.findByUsername(username).orElse(null);
 
-        // Redirect to index
-        return "redirect:/";
+        // If the user exists and the password matches
+        if (user != null && user.getPassword().equals(password)) {
+            // Successful login, redirect to the home page
+
+            return "redirect:/";
+        } else {
+            // If authentication fails, redirect to login page or show error message
+            return "login"; // Or display an error message like "Invalid username or password"
+        }
     }
 
     @GetMapping("/")
